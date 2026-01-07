@@ -7,6 +7,8 @@ interface UnitPageProps {
   params: Promise<{ unitId: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function UnitDetailPage({ params }: UnitPageProps) {
   const { unitId } = await params;
 

@@ -1,5 +1,6 @@
-import { prisma } from "@/app/lib/db";
 import { UnitsGrid } from "@/app/components/UnitsGrid";
+
+export const dynamic = "force-dynamic";
 
 export default async function UnitsPage() {
   const years = await prisma.year.findMany({
