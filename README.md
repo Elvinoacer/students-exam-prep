@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 GTSS Exam Prep Portal
 
-## Getting Started
+![GTSS Banner](https://studentsexamprepportalmu-24cs.vercel.app/opengraph-image.png)
 
-First, run the development server:
+> **The official academic resource hub for Computer Science students.**  
+> Access past papers, lecture notes, assignments, and verified solutions in a premium, student-focused interface.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🔗 **Live Demo:** [https://studentsexamprepportalmu-24cs.vercel.app](https://studentsexamprepportalmu-24cs.vercel.app)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📚 Resource Management
+*   **Structured Content**: Organize materials by **Year** and **Unit**.
+*   **Rich Media Support**: Upload PDFs, DOCX, ZIPs, or embed **YouTube** videos directly.
+*   **Official vs. Community**: Clearly distinguish between official lecturer uploads and student contributions.
 
-## Learn More
+### 📝 Assignments & Solutions
+*   **Task Hub**: View specific assignments for each unit.
+*   **Solution Sharing**: Submit your own solutions or view official answer keys.
+*   **Attribution**: Contributors get recognized with "Uploaded by {Name}" badges.
 
-To learn more about Next.js, take a look at the following resources:
+### 🛡️ Admin Dashboard (Protected)
+*   **Secure Access**: Protected by **NextAuth** credentials (contact admin for access).
+*   **CMS Capabilities**: Create years, units, and manage all content from a premium dashboard.
+*   **Timetable Manager**: Update exam banners dynamically for each year group.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
 
-## Deploy on Vercel
+Built with the latest Modern Web Technologies for speed, scale, and aesthetics.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+*   **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+*   **Language**: [TypeScript](https://www.typescriptlang.org/)
+*   **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [Framer Motion](https://www.framer.com/motion/) (Animations)
+*   **Database**: [PostgreSQL (Prisma ORM)](https://www.prisma.io/)
+*   **Storage**: [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) (Files) + [Cloudinary](https://cloudinary.com/) (Images)
+*   **Auth**: [NextAuth.js](https://next-auth.js.org/)
+*   **Icons**: [Lucide React](https://lucide.dev/)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📸 Screenshots
+
+| Landing Page | Unit Details |
+|:---:|:---:|
+| <img src="public/screenshots/landing.png" alt="Landing" width="400"/> | <img src="public/screenshots/unit.png" alt="Unit" width="400"/> |
+
+| Admin Dashboard | Dark Mode UI |
+|:---:|:---:|
+| <img src="public/screenshots/admin.png" alt="Admin" width="400"/> | <img src="public/screenshots/ui.png" alt="UI" width="400"/> |
+
+---
+
+## ⚡ Getting Started
+
+### Prerequisites
+*   Node.js 18+
+*   PostgreSQL Database
+*   Vercel Blob Token
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/your-username/studentsexamprepportal.git
+    cd studentsexamprepportal
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Setup Environment Variables**
+    Create a `.env` file:
+    ```env
+    DATABASE_URL="postgresql://..."
+    BLOB_READ_WRITE_TOKEN="vercel_blob_..."
+    NEXTAUTH_SECRET="your_secret"
+    NEXTAUTH_URL="http://localhost:3000"
+    ```
+
+4.  **Run Database Migrations**
+    ```bash
+    npx prisma db push
+    ```
+
+5.  **Start Development Server**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from the GTSS community! If you have a feature request or bug report, please open an issue or submit a PR.
+
+**License**: MIT
+**Maintained by**: Elvin & GTSS Tech Team
