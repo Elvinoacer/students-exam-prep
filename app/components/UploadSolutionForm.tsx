@@ -150,6 +150,7 @@ export function UploadSolutionForm({ assignmentTitle }: { assignmentTitle?: stri
                                 type="file"
                                 name="file"
                                 required
+                                accept=".pdf,.doc,.docx,.ppt,.pptx,.zip,.rar"
                                 className="w-full px-4 py-12 rounded-xl bg-black/20 border-2 border-dashed border-white/10 text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:border-indigo-500/50 transition-colors text-center cursor-pointer"
                             />
                             <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center pt-8 opacity-50">

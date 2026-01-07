@@ -140,7 +140,7 @@ export function UploadResourceForm({ units }: { units: { id: string; name: strin
       if (ext === "pdf") finalFileType = "pdf";
       else if (["doc", "docx"].includes(ext || "")) finalFileType = "docx";
       else if (["ppt", "pptx"].includes(ext || "")) finalFileType = "ppt";
-      else if (ext === "zip") finalFileType = "zip";
+      else if (["zip", "rar"].includes(ext || "")) finalFileType = "zip";
 
       const apiFormData = new FormData();
       apiFormData.append("title", item.autoTitle);
@@ -287,7 +287,7 @@ export function UploadResourceForm({ units }: { units: { id: string; name: strin
                         <input 
                             ref={fileInputRef} 
                             type="file" multiple 
-                            accept=".pdf,.doc,.docx,.ppt,.pptx,.zip"
+                            accept=".pdf,.doc,.docx,.ppt,.pptx,.zip,.rar"
                             className="hidden" 
                             onChange={(e) => handleFilesSelected(e.target.files)} 
                         />

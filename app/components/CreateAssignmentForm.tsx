@@ -113,6 +113,7 @@ export function CreateAssignmentForm({ units }: { units: { id: string; name: str
                         <input
                             type="file"
                             name="file"
+                            accept=".pdf,.doc,.docx,.ppt,.pptx,.zip,.rar"
                             className="w-full px-4 py-8 sm:py-8 rounded-xl bg-black/20 border-2 border-dashed border-white/10 text-gray-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:border-indigo-500/50 transition-colors text-center cursor-pointer text-xs sm:text-sm"
                         />
                          <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center pt-6 opacity-30">

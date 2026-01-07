@@ -3,6 +3,8 @@ import Link from "next/link";
 import { FolderOpen, ArrowLeft, Download, ExternalLink, Youtube, FileText, User } from "lucide-react";
 import { DeleteButton } from "@/app/components/DeleteButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminResourcesPage() {
   const resources = await prisma.resource.findMany({
     orderBy: { createdAt: "desc" },

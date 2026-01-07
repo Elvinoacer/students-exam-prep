@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CldUploadWidget } from "next-cloudinary";
 import { DeleteButton } from "@/app/components/DeleteButton";
 import { Calendar, Upload, Image as ImageIcon, Loader2 } from "lucide-react";
 
@@ -20,23 +19,28 @@ export function ManageTimetableForm({ years }: { years: Year[] }) {
   const [isLoading, setIsLoading] = useState(false);
 
   // Function to handle saving the image data to our DB after Cloudinary upload
-  async function handleUploadSuccess(result: any, yearId: string) {
+  async function handleFileUpload(file: File, yearId: string) {
     setIsLoading(true);
-    const imageUrl = result.info.secure_url;
     
     try {
+      const formData = new FormData();
+      formData.append("yearId", yearId);
+      formData.append("file", file);
+
       const res = await fetch("/api/admin/timetable", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ yearId, imageUrl }),
+        body: formData,
       });
 
-      if (!res.ok) throw new Error("Failed to save timetable to DB");
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to save timetable");
+      }
       
       router.refresh();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Error saving timetable.");
+      alert(error.message || "Error saving timetable.");
     } finally {
       setIsLoading(false);
     }
@@ -91,42 +95,23 @@ export function ManageTimetableForm({ years }: { years: Year[] }) {
                     )}
 
                     <div className="w-full mt-6">
-                        <CldUploadWidget 
-                            uploadPreset="exam-portal" 
-                            onSuccess={(result) => handleUploadSuccess(result, year.id)}
-                            options={{
-                                sources: ['local', 'url'],
-                                multiple: false,
-                                clientAllowedFormats: ['png', 'jpeg', 'jpg', 'webp'],
-                                styles: {
-                                    palette: {
-                                        window: "#030712",
-                                        sourceBg: "#111827",
-                                        windowBorder: "#909090",
-                                        tabIcon: "#FFFFFF",
-                                        inactiveTabIcon: "#697789",
-                                        menuIcons: "#FFFFFF",
-                                        link: "#6366F1",
-                                        action: "#339933",
-                                        inProgress: "#00BFFF",
-                                        complete: "#339933",
-                                        error: "#cc0000",
-                                        textDark: "#000000",
-                                        textLight: "#FFFFFF"
-                                    }
-                                }
+                        <input
+                            type="file"
+                            id={`upload-${year.id}`}
+                            className="hidden"
+                            accept="image/png, image/jpeg, image/jpg, image/webp"
+                            disabled={isLoading}
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handleFileUpload(file, year.id);
                             }}
+                        />
+                        <label 
+                            htmlFor={`upload-${year.id}`}
+                            className={`w-full py-2.5 sm:py-3 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 hover:border-indigo-500/50 transition-all flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer ${isLoading ? 'opacity-50 pointer-events-none' : ''}`}
                         >
-                            {({ open }) => (
-                                <button 
-                                    onClick={() => open()}
-                                    disabled={isLoading}
-                                    className="w-full py-2.5 sm:py-3 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 hover:border-indigo-500/50 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
-                                >
-                                    {isLoading ? <Loader2 className="animate-spin" /> : <><Upload size={16} className="sm:w-[18px] sm:h-[18px]" /> {year.timetable ? "Replace Image" : "Upload Image"}</>}
-                                </button>
-                            )}
-                        </CldUploadWidget>
+                            {isLoading ? <Loader2 className="animate-spin" /> : <><Upload size={16} className="sm:w-[18px] sm:h-[18px]" /> {year.timetable ? "Replace Image" : "Upload Image"}</>}
+                        </label>
                     </div>
 
                 </div>

@@ -21,6 +21,8 @@ export async function POST(request: Request): Promise<NextResponse> {
             "application/vnd.openxmlformats-officedocument.presentationml.presentation", // pptx
             "application/zip",
             "application/x-zip-compressed",
+            "application/vnd.rar",
+            "application/x-rar-compressed",
             "image/jpeg",
             "image/png",
           ],

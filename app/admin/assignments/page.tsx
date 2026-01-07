@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ListChecks, Plus, PenSquare, Trash2, ArrowLeft, Calendar, FileText } from "lucide-react";
 import { DeleteButton } from "@/app/components/DeleteButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminAssignmentsPage() {
   const assignments = await prisma.assignment.findMany({
     orderBy: { createdAt: "desc" },
