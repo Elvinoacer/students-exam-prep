@@ -1,6 +1,36 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/db";
 
+export async function POST(request: Request) {
+  try {
+    const { title, unitId, notes, fileUrl } = await request.json();
+
+    if (!title || !unitId) {
+      return NextResponse.json(
+        { error: "Title and Unit are required" },
+        { status: 400 }
+      );
+    }
+
+    const assignment = await prisma.assignment.create({
+      data: {
+        title,
+        unitId,
+        notes,
+        fileUrl,
+      },
+    });
+
+    return NextResponse.json(assignment);
+  } catch (error) {
+    console.error("Create assignment error:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();
