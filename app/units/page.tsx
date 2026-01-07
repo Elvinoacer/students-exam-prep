@@ -1,3 +1,4 @@
+import { prisma } from "@/app/lib/db";
 import { UnitsGrid } from "@/app/components/UnitsGrid";
 
 export const dynamic = "force-dynamic";
