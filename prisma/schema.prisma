@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// =====================
+// Data Models
+// =====================
+
+model Year {
+  id        String   @id @default(cuid())
+  name      String   @unique // e.g., "Year 1", "Year 2"
+  units     Unit[]
+  timetable ExamTimetable?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Unit {
+  id           String       @id @default(cuid())
+  name         String
+  yearId       String
+  year         Year         @relation(fields: [yearId], references: [id], onDelete: Cascade)
+  resources    Resource[]
+  assignments  Assignment[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([yearId])
+}
+
+model Resource {
+  id         String   @id @default(cuid())
+  unitId     String
+  unit       Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  title      String
+  fileUrl    String
+  fileType   String   // pdf, docx, ppt, zip, youtube
+  uploadedBy String   // "GTSS" or student name
+  isOfficial Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([unitId])
+}
+
+model Assignment {
+  id        String               @id @default(cuid())
+  unitId    String
+  unit      Unit                 @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  title     String
+  fileUrl   String?
+  notes     String?              // text / markdown
+  solutions AssignmentSolution[]
+  createdAt DateTime             @default(now())
+
+  @@index([unitId])
+}
+
+model AssignmentSolution {
+  id           String     @id @default(cuid())
+  assignmentId String
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  fileUrl      String
+  uploadedBy   String
+  isOfficial   Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+
+  @@index([assignmentId])
+}
+
+model ExamTimetable {
+  id        String   @id @default(cuid())
+  yearId    String   @unique
+  year      Year     @relation(fields: [yearId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  createdAt DateTime @default(now())
+}
