@@ -101,19 +101,39 @@ export function UploadResourceForm({ units }: { units: { id: string; name: strin
     setFileQueue(prev => prev.map(i => i.id === item.id ? { ...i, status: "uploading" } : i));
 
     try {
-      const newBlob = await upload(item.file.name, item.file, {
-        access: "public",
-        handleUploadUrl: "/api/upload/auth",
-        onUploadProgress: (progressEvent: any) => {
-           let percentage = 0;
-           if (typeof progressEvent === 'number') {
-              percentage = progressEvent;
-           } else if (progressEvent.total > 0) {
-              percentage = (progressEvent.loaded / progressEvent.total) * 100;
-           }
-           setFileQueue(prev => prev.map(i => i.id === item.id ? { ...i, progress: percentage } : i));
-        }
+      let fileUrl = "";
+
+      // 1. Check if file already exists
+      const checkRes = await fetch("/api/upload/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: item.file.name }),
       });
+      
+      const checkData = await checkRes.json();
+
+      if (checkData.exists && checkData.url) {
+        // REUSE EXISTING FILE
+        fileUrl = checkData.url;
+        // Simulate progress for UX
+        setFileQueue(prev => prev.map(i => i.id === item.id ? { ...i, progress: 100 } : i));
+      } else {
+        // UPLOAD NEW FILE
+        const newBlob = await upload(item.file.name, item.file, {
+          access: "public",
+          handleUploadUrl: "/api/upload/auth",
+          onUploadProgress: (progressEvent: any) => {
+             let percentage = 0;
+             if (typeof progressEvent === 'number') {
+                percentage = progressEvent;
+             } else if (progressEvent.total > 0) {
+                percentage = (progressEvent.loaded / progressEvent.total) * 100;
+             }
+             setFileQueue(prev => prev.map(i => i.id === item.id ? { ...i, progress: percentage } : i));
+          }
+        });
+        fileUrl = newBlob.url;
+      }
 
       let finalFileType = "file";
       const ext = item.file.name.split(".").pop()?.toLowerCase();
@@ -127,7 +147,7 @@ export function UploadResourceForm({ units }: { units: { id: string; name: strin
       apiFormData.append("unitId", unitId);
       apiFormData.append("uploadedBy", uploadedBy);
       apiFormData.append("type", "file");
-      apiFormData.append("fileUrl", newBlob.url);
+      apiFormData.append("fileUrl", fileUrl);
       apiFormData.append("fileType", finalFileType);
 
       const res = await fetch("/api/upload/resource", { method: "POST", body: apiFormData });

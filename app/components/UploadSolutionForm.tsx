@@ -32,12 +32,22 @@ export function UploadSolutionForm({ assignmentTitle }: { assignmentTitle?: stri
           throw new Error("Please select a file to upload.");
         }
 
-        const newBlob = await upload(file.name, file, {
-          access: "public",
-          handleUploadUrl: "/api/upload/auth",
+        // 1. Check if file already exists (Smart Reuse)
+        const checkRes = await fetch("/api/upload/check", {
+             method: "POST",
+             body: JSON.stringify({ filename: file.name }),
         });
+        const checkData = await checkRes.json();
 
-        finalFileUrl = newBlob.url;
+        if (checkData.exists && checkData.url) {
+             finalFileUrl = checkData.url;
+        } else {
+             const newBlob = await upload(file.name, file, {
+               access: "public",
+               handleUploadUrl: "/api/upload/auth",
+             });
+             finalFileUrl = newBlob.url;
+        }
       } else {
          if (!youtubeUrl) throw new Error("Please enter a YouTube URL.");
          finalFileUrl = youtubeUrl;

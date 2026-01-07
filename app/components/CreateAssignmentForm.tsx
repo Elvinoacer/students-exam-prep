@@ -21,11 +21,22 @@ export function CreateAssignmentForm({ units }: { units: { id: string; name: str
     try {
       let fileUrl = "";
       if (file && file.size > 0) {
-        const blob = await upload(file.name, file, {
-          access: "public",
-          handleUploadUrl: "/api/upload/auth",
+        // 1. Check if file already exists (Smart Reuse)
+        const checkRes = await fetch("/api/upload/check", {
+             method: "POST",
+             body: JSON.stringify({ filename: file.name }),
         });
-        fileUrl = blob.url;
+        const checkData = await checkRes.json();
+
+        if (checkData.exists && checkData.url) {
+             fileUrl = checkData.url;
+        } else {
+            const blob = await upload(file.name, file, {
+              access: "public",
+              handleUploadUrl: "/api/upload/auth",
+            });
+            fileUrl = blob.url;
+        }
       }
 
       const res = await fetch("/api/admin/assignment", {
