@@ -1,6 +1,6 @@
 # 🎓 GTSS Exam Prep Portal
 
-![GTSS Banner](public/screenshots/landing.png)
+![GTSS Banner](public/images/opengraph-image.png)
 
 > **The official academic resource hub for Computer Science students.**  
 > Access past papers, lecture notes, assignments, and verified solutions in a premium, student-focused interface.
