@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { Trash2, Loader2 } from "lucide-react";
 
 interface DeleteButtonProps {
   id: string;
@@ -11,6 +12,7 @@ interface DeleteButtonProps {
 
 export function DeleteButton({ id, endpoint, itemName = "item" }: DeleteButtonProps) {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [isDeleting, setIsDeleting] = useState(false);
 
   async function handleDelete() {
@@ -31,7 +33,9 @@ export function DeleteButton({ id, endpoint, itemName = "item" }: DeleteButtonPr
         throw new Error("Failed to delete item");
       }
 
-      router.refresh();
+      startTransition(() => {
+        router.refresh();
+      });
     } catch (error) {
       console.error(error);
       alert("Failed to delete item.");
@@ -40,13 +44,16 @@ export function DeleteButton({ id, endpoint, itemName = "item" }: DeleteButtonPr
     }
   }
 
+  const isLoading = isDeleting || isPending;
+
   return (
     <button
       onClick={handleDelete}
-      disabled={isDeleting}
-      className="text-sm text-red-600 hover:text-red-800 hover:underline disabled:opacity-50"
+      disabled={isLoading}
+      className="p-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+      title={`Delete ${itemName}`}
     >
-      {isDeleting ? "Deleting..." : "Delete"}
+      {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
     </button>
   );
 }

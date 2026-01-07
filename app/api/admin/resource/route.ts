@@ -17,7 +17,12 @@ export async function DELETE(request: Request) {
     });
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (error: any) {
+    // If record not found (P2025), consider it a success (idempotent)
+    if (error.code === 'P2025') {
+       return NextResponse.json({ success: true });
+    }
+
     console.error("Delete resource error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
