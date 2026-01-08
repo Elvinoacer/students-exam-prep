@@ -44,16 +44,15 @@ export function FilePreviewModal({ isOpen, onClose, fileUrl, fileType, title }: 
 
   // Get the preview URL based on file type
   const getPreviewUrl = () => {
-    // For PDFs, try direct embed first (most modern browsers support this)
-    // If file is from Vercel Blob, it should work directly
+    // For PDFs, use direct embed (browsers have native PDF support)
     if (fileType === "pdf") {
-      // Direct PDF embed works best with Vercel Blob URLs
       return fileUrl;
     }
     
-    // For Office documents (docx, ppt, pptx), use Microsoft Office Online Viewer
+    // For Office documents (docx, ppt, pptx), use Google Docs Viewer
+    // Google Docs Viewer is more reliable with various URL formats than Office Online
     if (fileType === "docx" || fileType === "ppt") {
-      return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(fileUrl)}`;
+      return `https://docs.google.com/gview?url=${encodeURIComponent(fileUrl)}&embedded=true`;
     }
 
     // Fallback: try direct embed
