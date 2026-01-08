@@ -30,46 +30,46 @@ export default function Home() {
          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/20 rounded-full blur-[120px]" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 flex flex-col min-h-screen">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 flex flex-col min-h-screen">
         
         {/* Hero Section */}
-        <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto text-center py-20">
+        <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto text-center py-12 sm:py-16 md:py-20">
             <motion.div 
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="space-y-8"
+                className="space-y-5 sm:space-y-6 md:space-y-8"
             >
-                <motion.div variants={item} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium uppercase tracking-wider">
-                    <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                <motion.div variants={item} className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider">
+                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-indigo-500 animate-pulse" />
                     v2.0 Now Live
                 </motion.div>
 
-                <motion.h1 variants={item} className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+                <motion.h1 variants={item} className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight leading-tight">
                     Master Your <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
                         Computer Science
                     </span> Exams
                 </motion.h1>
 
-                <motion.p variants={item} className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                <motion.p variants={item} className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
                     The ultimate community-driven resource hub. Access past papers, 
                     share assignments, and watch lectures—all in one place.
                 </motion.p>
 
-                <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-3 sm:pt-4">
                     <Link 
                         href="/units"
-                        className="group relative px-8 py-4 bg-white text-black font-bold rounded-xl overflow-hidden hover:scale-105 transition-transform"
+                        className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white text-black text-sm sm:text-base font-bold rounded-xl overflow-hidden hover:scale-105 transition-transform"
                     >
-                        <span className="relative z-10 flex items-center gap-2">
-                           Start Learning <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                           Start Learning <ArrowRight size={16} className="sm:w-[18px] sm:h-[18px] group-hover:translate-x-1 transition-transform" />
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-indigo-200 to-purple-200 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </Link>
                     <Link 
                         href="/upload"
-                        className="px-8 py-4 bg-white/5 border border-white/10 text-white font-medium rounded-xl hover:bg-white/10 transition-colors backdrop-blur-sm"
+                        className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/5 border border-white/10 text-white text-sm sm:text-base font-medium rounded-xl hover:bg-white/10 transition-colors backdrop-blur-sm text-center"
                     >
                         Contribute Resource
                     </Link>
@@ -82,7 +82,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
-            className="grid md:grid-cols-3 gap-6 pb-20"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 pb-12 sm:pb-16 md:pb-20"
         >
             <FeatureCard 
                 icon={<BookOpen className="text-indigo-400" size={24} />}
@@ -104,7 +104,7 @@ export default function Home() {
             />
         </motion.div>
 
-        <footer className="py-8 text-center text-sm text-gray-600 border-t border-white/5">
+        <footer className="py-5 sm:py-6 md:py-8 text-center text-xs sm:text-sm text-gray-600 border-t border-white/5">
             <p>© {new Date().getFullYear()} GTSS Computer Science. Built by Students, for Students.</p>
         </footer>
 
@@ -120,13 +120,13 @@ function FeatureCard({ icon, title, desc, delay }: { icon: React.ReactNode, titl
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.8 + delay }}
-            className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm"
+            className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm"
         >
-            <div className="mb-4 w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center">
+            <div className="mb-3 sm:mb-4 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-white/5 flex items-center justify-center">
                 {icon}
             </div>
-            <h3 className="text-xl font-bold mb-2">{title}</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed text-gray-400">
+            <h3 className="text-base sm:text-lg md:text-xl font-bold mb-1.5 sm:mb-2">{title}</h3>
+            <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed text-gray-400">
                 {desc}
             </p>
         </motion.div>
