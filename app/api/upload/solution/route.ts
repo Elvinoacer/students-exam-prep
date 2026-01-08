@@ -1,4 +1,3 @@
-import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/db";
 
@@ -28,19 +27,15 @@ export async function POST(request: Request) {
       }
       fileUrl = url;
     } else {
-      // File handling
-      const file = formData.get("file") as File;
-      if (!file) {
+      // File handling - client uploads to Vercel Blob first, so we receive fileUrl
+      const uploadedFileUrl = formData.get("fileUrl") as string;
+      if (!uploadedFileUrl) {
         return NextResponse.json(
-          { error: "No file provided" },
+          { error: "No file URL provided" },
           { status: 400 }
         );
       }
-
-      const blob = await put(file.name, file, {
-        access: "public",
-      });
-      fileUrl = blob.url;
+      fileUrl = uploadedFileUrl;
     }
 
     // Save to DB
