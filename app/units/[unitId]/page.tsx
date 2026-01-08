@@ -2,6 +2,7 @@ import { prisma } from "@/app/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { FileText, Download, Youtube, ExternalLink, ChevronRight, Upload } from "lucide-react";
+import { DownloadAllButton } from "@/app/components/DownloadAllButton";
 
 interface UnitPageProps {
   params: Promise<{ unitId: string }>;
@@ -51,13 +52,17 @@ export default async function UnitDetailPage({ params }: UnitPageProps) {
                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-2">{unit.name}</h1>
                    <p className="text-lg text-gray-400">Access all study materials and assignments in one place.</p>
                 </div>
-                <Link
-                    href={`/upload?unitId=${unit.id}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20"
-                >
-                    <Upload size={18} />
-                    Contribute
-                </Link>
+                <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                    <DownloadAllButton unitId={unit.id} />
+                    <Link
+                        href={`/upload?unitId=${unit.id}`}
+                        className="flex-shrink-0 inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-indigo-600 text-white text-xs sm:text-sm font-semibold hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 whitespace-nowrap"
+                    >
+                        <Upload size={14} className="sm:w-[18px] sm:h-[18px] flex-shrink-0" />
+                        <span className="hidden sm:inline">Contribute</span>
+                        <span className="sm:hidden">Add</span>
+                    </Link>
+                </div>
             </div>
         </div>
 
