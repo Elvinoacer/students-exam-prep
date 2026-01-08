@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { FileText, Download, Youtube, ExternalLink, ChevronRight, Upload } from "lucide-react";
 import { DownloadAllButton } from "@/app/components/DownloadAllButton";
+import { ResourceCard } from "@/app/components/ResourceCard";
+import { AssignmentCard } from "@/app/components/AssignmentCard";
 
 interface UnitPageProps {
   params: Promise<{ unitId: string }>;
@@ -86,55 +88,7 @@ export default async function UnitDetailPage({ params }: UnitPageProps) {
                     ) : (
                         <div className="grid gap-4">
                             {unit.resources.map((resource) => (
-                                <div key={resource.id} className="group flex flex-col md:flex-row gap-5 p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all">
-                                    
-                                    {/* Thumbnail */}
-                                    <div className="flex-shrink-0 w-full md:w-48">
-                                        {resource.fileType === "youtube" ? (
-                                            <div className="aspect-video rounded-xl overflow-hidden bg-black shadow-lg relative group-hover:ring-2 ring-indigo-500/50 transition-all">
-                                                <iframe 
-                                                    src={`https://www.youtube.com/embed/${resource.fileUrl.split('v=')[1]?.substring(0, 11) || resource.fileUrl.split('/').pop()}`}
-                                                    title={resource.title}
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowFullScreen
-                                                    className="w-full h-full"
-                                                ></iframe>
-                                            </div>
-                                        ) : (
-                                            <div className="h-full min-h-[100px] rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center text-4xl shadow-inner border border-white/5">
-                                                {resource.fileType === "pdf" && "📄"}
-                                                {resource.fileType === "docx" && "📝"}
-                                                {resource.fileType === "ppt" && "📊"}
-                                                {resource.fileType === "zip" && "📦"}
-                                                {resource.fileType === "file" && "📎"}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Info */}
-                                    <div className="flex-1 flex flex-col justify-between py-1">
-                                        <div>
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <span className="bg-white/10 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">{resource.fileType}</span>
-                                                {resource.isOfficial && <span className="bg-indigo-500/20 text-indigo-300 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">Official</span>}
-                                            </div>
-                                            <h3 className="text-lg font-bold text-gray-100 group-hover:text-indigo-400 transition-colors line-clamp-1">{resource.title}</h3>
-                                            <p className="text-sm text-gray-500 mt-1">Uploaded by {resource.uploadedBy} • {new Date(resource.createdAt).toLocaleDateString()}</p>
-                                        </div>
-                                        
-                                        <div className="mt-4 md:mt-0">
-                                            <a 
-                                                href={resource.fileUrl} 
-                                                target="_blank" 
-                                                className={`inline-flex items-center gap-2 text-sm font-semibold transition-colors ${
-                                                    resource.fileType === 'youtube' ? "text-red-400 hover:text-red-300" : "text-indigo-400 hover:text-indigo-300"
-                                                }`}
-                                            >
-                                                {resource.fileType === 'youtube' ? <><Youtube size={16} /> Watch Video</> : <><Download size={16} /> Download File</>}
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                <ResourceCard key={resource.id} resource={resource} />
                             ))}
                         </div>
                     )}
@@ -157,38 +111,7 @@ export default async function UnitDetailPage({ params }: UnitPageProps) {
                             <p className="text-gray-500 text-sm">No assignments posted yet.</p>
                         ) : (
                             unit.assignments.map((assignment) => (
-                                <div key={assignment.id} className="p-5 rounded-2xl bg-[#1f2937]/50 border border-white/5 hover:border-white/10 transition-all">
-                                    <div className="flex justify-between items-start gap-4">
-                                        <h3 className="font-bold text-gray-100">{assignment.title}</h3>
-                                        {assignment.fileUrl && (
-                                            <a href={assignment.fileUrl} target="_blank" className="text-gray-400 hover:text-white transition-colors">
-                                                <ExternalLink size={16} />
-                                            </a>
-                                        )}
-                                    </div>
-                                    
-                                    {assignment.notes && <p className="text-sm text-gray-400 mt-2 line-clamp-3">{assignment.notes}</p>}
-                                    
-                                    <div className="mt-5 pt-4 border-t border-white/5">
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-xs font-bold text-gray-500 uppercase">Solutions</span>
-                                            <Link href={`/upload/solution?assignmentId=${assignment.id}`} className="text-xs font-bold text-indigo-400 hover:text-indigo-300">
-                                                + Submit
-                                            </Link>
-                                        </div>
-                                        <div className="mt-3 space-y-2">
-                                            {assignment.solutions.map(sol => (
-                                                <div key={sol.id} className="flex items-center justify-between p-2 rounded-lg bg-black/20 text-xs">
-                                                    <span className="text-gray-300 truncate max-w-[120px]">
-                                                        {sol.isOfficial ? <span className="text-emerald-400">Official (GTSS)</span> : sol.uploadedBy}
-                                                    </span>
-                                                    <a href={sol.fileUrl} target="_blank" className="text-gray-500 hover:text-white">View</a>
-                                                </div>
-                                            ))}
-                                            {assignment.solutions.length === 0 && <span className="text-xs text-gray-600 block italic">None yet</span>}
-                                        </div>
-                                    </div>
-                                </div>
+                                <AssignmentCard key={assignment.id} assignment={assignment} />
                             ))
                         )}
                     </div>

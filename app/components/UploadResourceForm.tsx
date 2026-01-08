@@ -397,8 +397,12 @@ export function UploadResourceForm({ units }: { units: { id: string; name: strin
                  <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-8 pt-6 border-t border-white/10"
+                    className="mt-8 pt-6 border-t border-white/10 space-y-4"
                  >
+                     <p className="text-[10px] text-gray-400 text-center px-4 leading-relaxed bg-white/5 py-3 rounded-xl border border-white/5">
+                       By uploading, you agree that your name will be displayed as attribution. 🙏
+                     </p>
+
                      <button
                         onClick={handleUploadAll}
                         disabled={isGlobalUploading || !unitId || !uploadedBy || (fileQueue.every(i => i.status === "done") && youtubeQueue.every(i => i.status === "done"))}

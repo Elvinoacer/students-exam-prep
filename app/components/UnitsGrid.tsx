@@ -36,16 +36,16 @@ export function UnitsGrid({ years }: { years: Year[] }) {
     <div className="space-y-12">
       
       {/* Search Header */}
-      <div className="relative max-w-2xl mx-auto">
-        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-muted-foreground">
-          <Search size={20} />
+      <div className="relative max-w-2xl mx-auto px-1 sm:px-0">
+        <div className="absolute inset-y-0 left-4 sm:left-5 flex items-center pointer-events-none text-muted-foreground">
+          <Search size={18} className="sm:w-5 sm:h-5" />
         </div>
         <input
           type="text"
           placeholder="Search units, topics, or years..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md focus:outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all text-lg shadow-xl"
+          className="w-full pl-11 sm:pl-14 pr-4 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md focus:outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all text-sm sm:text-lg shadow-xl"
         />
       </div>
 
@@ -59,8 +59,8 @@ export function UnitsGrid({ years }: { years: Year[] }) {
             transition={{ delay: yearIndex * 0.1 }}
             className="space-y-6"
           >
-            <div className="flex items-center gap-4">
-               <h2 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+            <div className="flex items-center gap-3 sm:gap-4">
+               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
                   {year.name}
                </h2>
                <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
@@ -80,13 +80,13 @@ export function UnitsGrid({ years }: { years: Year[] }) {
                   alt={`${year.name} Timetable`}
                   className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                 />
-                <div className="absolute bottom-6 left-6 z-20 flex items-center gap-3">
-                   <div className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white">
-                      <Calendar size={24} />
+                <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-20 flex items-center gap-2 sm:gap-3">
+                   <div className="p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white">
+                      <Calendar size={20} className="sm:w-6 sm:h-6" />
                    </div>
                    <div>
-                      <p className="font-bold text-lg text-white">Exam Timetable</p>
-                      <p className="text-gray-300 text-sm">Tap to view full schedule</p>
+                      <p className="font-bold text-base sm:text-lg text-white leading-tight">Exam Timetable</p>
+                      <p className="text-gray-300 text-[10px] sm:text-sm">Tap to view full schedule</p>
                    </div>
                 </div>
               </motion.div>
@@ -103,28 +103,28 @@ export function UnitsGrid({ years }: { years: Year[] }) {
                   whileHover={{ y: -5, borderColor: "rgba(99, 102, 241, 0.3)" }}
                   className="group relative h-full p-6 rounded-2xl bg-card/50 border border-white/5 backdrop-blur-sm hover:bg-card/80 transition-all shadow-lg hover:shadow-indigo-500/10 flex flex-col justify-between"
                 >
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     <div className="flex justify-between items-start">
-                        <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
-                            <BookOpen size={24} />
+                        <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                            <BookOpen size={20} className="sm:w-6 sm:h-6" />
                         </div>
-                        <ChevronRight className="text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                        <ChevronRight size={18} className="text-muted-foreground group-hover:translate-x-1 transition-transform sm:w-5 sm:h-5" />
                     </div>
                     
                     <div>
-                        <h3 className="text-xl font-bold leading-tight group-hover:text-indigo-400 transition-colors">
+                        <h3 className="text-base sm:text-lg md:text-xl font-bold leading-tight group-hover:text-indigo-400 transition-colors">
                             {unit.name}
                         </h3>
                     </div>
                   </div>
 
-                  <div className="mt-6 flex items-center gap-4 text-sm font-medium text-muted-foreground pt-4 border-t border-white/5">
-                    <div className="flex items-center gap-2">
-                        <FileText size={16} />
+                  <div className="mt-4 sm:mt-6 flex items-center gap-3 sm:gap-4 text-[10px] sm:text-sm font-medium text-muted-foreground pt-3 sm:pt-4 border-t border-white/5">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                        <FileText size={14} className="sm:w-4 sm:h-4 text-emerald-400/80" />
                         <span>{unit._count.resources} resources</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <BookOpen size={16} />
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                        <BookOpen size={14} className="sm:w-4 sm:h-4 text-orange-400/80" />
                         <span>{unit._count.assignments} tasks</span>
                     </div>
                   </div>
